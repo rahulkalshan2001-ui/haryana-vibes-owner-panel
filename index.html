@@ -3,67 +3,138 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-<title>Owner Panel — Haryana Vibes Cafe</title>
-<link rel="stylesheet" href="../css/style.css" />
+<title>Haryana Vibes Cafe</title>
+<link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="owner-body">
+<body>
 
-<div id="view-login">
-  <div class="login-wrap">
-    <div class="login-card">
-      <h1>🔐 Owner Login</h1>
-      <div class="field"><label>Owner ID</label><input id="loginId" placeholder="Owner ID" /></div>
-      <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="Password" /></div>
-      <button class="primary-btn" style="margin:14px 0 8px;width:100%;" onclick="doLogin()">Login</button>
-      <div style="text-align:center;"><button class="link-btn" onclick="showView('forgot')">Forgot password?</button></div>
-      <p style="font-size:.68rem;color:var(--muted);text-align:center;margin-top:14px;">Demo credentials: owner / haryana123</p>
+<div id="view-home">
+  <div class="cover" id="coverBg">
+    <div class="overlay"></div>
+    <div class="brand-row">
+      <div class="logo-circle"><img id="logoImg" src="" alt="logo" /></div>
+      <div>
+        <h1 id="cafeNameH">Haryana Vibes Cafe</h1>
+        <p id="taglineP"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions">
+    <a href="#/menu" class="qa-icon-wrap"><span class="qa-icon">🍽️</span>Order Now</a>
+    <a href="#/info" class="qa-icon-wrap"><span class="qa-icon">📍</span>Location</a>
+    <button onclick="callOwner()"><span class="qa-icon">📞</span>Call</button>
+    <button onclick="whatsappOwner()"><span class="qa-icon">💬</span>WhatsApp</button>
+  </div>
+
+  <div class="section" id="offersSection">
+    <h2>🔥 Offers for you</h2>
+    <div class="offers-scroll" id="offersScroll"></div>
+  </div>
+
+  <div class="section">
+    <h2>👨‍🍳 About the Owner</h2>
+    <div class="info-card" style="margin:0;">
+      <div class="owner-block">
+        <img id="ownerPhotoImg" src="" alt="owner" />
+        <div>
+          <strong id="ownerNameP"></strong>
+          <p style="margin:4px 0 0;font-size:.78rem;color:var(--muted)">Founder, <span id="ownerCafeNameSpan"></span></p>
+        </div>
+      </div>
+      <p style="margin-top:10px;font-size:.8rem;color:var(--text)" id="aboutP"></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📸 Gallery</h2>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <div class="section">
+    <h2>⏰ Opening Hours</h2>
+    <div class="info-card" style="margin:0;">
+      <table class="timings-table" id="timingsTable"></table>
     </div>
   </div>
 </div>
 
-<div id="view-forgot" class="hidden">
-  <div class="login-wrap">
-    <div class="login-card">
-      <h1>🔑 Reset Password</h1>
-      <div class="field"><label>Owner ID</label><input id="forgotId" placeholder="Owner ID" /></div>
-      <div class="field"><label id="forgotQ">Security Question</label><input id="forgotAnswer" placeholder="Your answer" /></div>
-      <div class="field"><label>New Password</label><input id="forgotNewPass" type="password" placeholder="New password" /></div>
-      <button class="primary-btn" style="margin:14px 0 8px;width:100%;" onclick="doRecover()">Reset Password</button>
-      <div style="text-align:center;"><button class="link-btn" onclick="showView('login')">Back to Login</button></div>
+<div id="view-menu" class="hidden">
+  <div class="cat-chips" id="catChips"></div>
+  <div id="menuList"></div>
+</div>
+
+<div id="view-cart" class="hidden">
+  <div class="section"><h2>🛒 Your Cart</h2></div>
+  <div id="cartList"></div>
+  <div id="cartSummaryWrap"></div>
+</div>
+
+<div id="view-checkout" class="hidden">
+  <div class="section"><h2>✅ Checkout</h2></div>
+  <div class="toggle-row" id="fulfillmentToggle">
+    <button data-mode="pickup" id="pickupBtn">🏃 Pickup</button>
+    <button data-mode="delivery" id="deliveryBtn">🛵 Delivery</button>
+  </div>
+  <div class="field"><label>Full Name *</label><input id="custName" placeholder="Your name" /></div>
+  <div class="field"><label>Phone Number *</label><input id="custPhone" type="tel" placeholder="10-digit mobile number" /></div>
+  <div class="field hidden" id="addressField"><label>Delivery Address *</label><textarea id="custAddress" placeholder="House no, street, landmark"></textarea></div>
+  <div class="field"><label>Order Instructions (optional)</label><textarea id="custInstructions" placeholder="e.g. less spicy, no onion"></textarea></div>
+  <div class="cart-summary" id="checkoutSummary"></div>
+  <button class="primary-btn" id="placeOrderBtn">Place Order</button>
+</div>
+
+<div id="view-orders" class="hidden">
+  <div class="section"><h2>📦 My Orders</h2></div>
+  <div class="field" style="margin:0 14px 10px;">
+    <input id="trackPhoneInput" type="tel" placeholder="Enter your phone number to view orders" />
+  </div>
+  <div id="ordersList"></div>
+</div>
+
+<div id="view-info" class="hidden">
+  <div class="section"><h2>ℹ️ Cafe Info</h2></div>
+  <div class="info-card">
+    <h3 id="infoCafeName"></h3>
+    <p id="infoAddress"></p>
+    <div class="contact-row">
+      <a class="wa" href="#" id="waLink" target="_blank">WhatsApp</a>
+      <a class="call" href="#" id="callLink">Call</a>
+      <a class="mail" href="#" id="mailLink">Email</a>
     </div>
+    <div class="social-row" id="socialRow"></div>
+  </div>
+  <div class="info-card">
+    <h3>⏰ Opening Hours</h3>
+    <table class="timings-table" id="timingsTable2"></table>
+  </div>
+  <div class="info-card">
+    <h3>📍 Find Us</h3>
+    <a class="secondary-btn" id="mapsLink" target="_blank">Open in Google Maps</a>
+  </div>
+  <div class="info-card">
+    <h3>🔑 Owner Login</h3>
+    <a class="secondary-btn" href="owner/index.html">Go to Owner Panel</a>
   </div>
 </div>
 
-<div id="app" class="hidden">
-  <div class="topbar" style="position:sticky;">
-    <span class="title">🍛 Owner Panel</span>
-    <button class="icon-btn" onclick="doLogout()">⎋</button>
-  </div>
-  <div class="tabbar" id="tabbar">
-    <button data-tab="dashboard" class="active">Dashboard</button>
-    <button data-tab="orders">Orders <span id="newOrderDot" class="hidden">●</span></button>
-    <button data-tab="menu">Menu</button>
-    <button data-tab="offers">Offers</button>
-    <button data-tab="gallery">Gallery</button>
-    <button data-tab="settings">Settings</button>
-    <button data-tab="integrations">Integrations</button>
-    <button data-tab="account">Account</button>
-  </div>
-
-  <div id="tab-dashboard" class="tab-panel"></div>
-  <div id="tab-orders" class="tab-panel hidden"></div>
-  <div id="tab-menu" class="tab-panel hidden"></div>
-  <div id="tab-offers" class="tab-panel hidden"></div>
-  <div id="tab-gallery" class="tab-panel hidden"></div>
-  <div id="tab-settings" class="tab-panel hidden"></div>
-  <div id="tab-integrations" class="tab-panel hidden"></div>
-  <div id="tab-account" class="tab-panel hidden"></div>
+<div class="bottom-nav" id="bottomNav">
+  <a href="#/home" data-route="home"><span class="nav-icon">🏠</span>Home</a>
+  <a href="#/menu" data-route="menu"><span class="nav-icon">🍽️</span>Menu</a>
+  <a href="#/cart" data-route="cart"><span class="nav-icon">🛒</span>Cart<span class="cart-badge hidden" id="cartBadge">0</span></a>
+  <a href="#/orders" data-route="orders"><span class="nav-icon">📦</span>Orders</a>
+  <a href="#/info" data-route="info"><span class="nav-icon">ℹ️</span>Info</a>
 </div>
 
-<div id="modalRoot"></div>
+<div class="topbar" id="topbar" style="position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:none;">
+  <button class="icon-btn" onclick="history.back()">←</button>
+  <span class="title" id="topbarTitle"></span>
+  <span style="width:38px"></span>
+</div>
+
 <div class="toast" id="toast"></div>
 
-<script src="../js/store.js"></script>
-<script src="../js/owner.js"></script>
+<script src="js/store.js"></script>
+<script src="js/customer.js"></script>
 </body>
 </html>
