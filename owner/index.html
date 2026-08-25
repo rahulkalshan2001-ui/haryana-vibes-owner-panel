@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>Owner Panel — Haryana Vibes Cafe</title>
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="owner-body">
 
+<div id="view-login">
+  <div class="login-wrap">
+    <div class="login-card">
+      <h1>🔐 Owner Login</h1>
+      <div class="field"><label>Owner ID</label><input id="loginId" placeholder="Owner ID" /></div>
+      <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="Password" /></div>
+      <button class="primary-btn" style="margin:14px 0 8px;width:100%;" onclick="doLogin()">Login</button>
+      <div style="text-align:center;"><button class="link-btn" onclick="showView('forgot')">Forgot password?</button></div>
+      <p style="font-size:.68rem;color:var(--muted);text-align:center;margin-top:14px;">Demo credentials: owner / haryana123</p>
+    </div>
+  </div>
+</div>
+
+<div id="view-forgot" class="hidden">
+  <div class="login-wrap">
+    <div class="login-card">
+      <h1>🔑 Reset Password</h1>
+      <div class="field"><label>Owner ID</label><input id="forgotId" placeholder="Owner ID" /></div>
+      <div class="field"><label id="forgotQ">Security Question</label><input id="forgotAnswer" placeholder="Your answer" /></div>
+      <div class="field"><label>New Password</label><input id="forgotNewPass" type="password" placeholder="New password" /></div>
+      <button class="primary-btn" style="margin:14px 0 8px;width:100%;" onclick="doRecover()">Reset Password</button>
+      <div style="text-align:center;"><button class="link-btn" onclick="showView('login')">Back to Login</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="topbar" style="position:sticky;">
+    <span class="title">🍛 Owner Panel</span>
+    <button class="icon-btn" onclick="doLogout()">⎋</button>
+  </div>
+  <div class="tabbar" id="tabbar">
+    <button data-tab="dashboard" class="active">Dashboard</button>
+    <button data-tab="orders">Orders <span id="newOrderDot" class="hidden">●</span></button>
+    <button data-tab="menu">Menu</button>
+    <button data-tab="offers">Offers</button>
+    <button data-tab="gallery">Gallery</button>
+    <button data-tab="settings">Settings</button>
+    <button data-tab="integrations">Integrations</button>
+    <button data-tab="account">Account</button>
+  </div>
+
+  <div id="tab-dashboard" class="tab-panel"></div>
+  <div id="tab-orders" class="tab-panel hidden"></div>
+  <div id="tab-menu" class="tab-panel hidden"></div>
+  <div id="tab-offers" class="tab-panel hidden"></div>
+  <div id="tab-gallery" class="tab-panel hidden"></div>
+  <div id="tab-settings" class="tab-panel hidden"></div>
+  <div id="tab-integrations" class="tab-panel hidden"></div>
+  <div id="tab-account" class="tab-panel hidden"></div>
+</div>
+
+<div id="modalRoot"></div>
+<div class="toast" id="toast"></div>
+
+<script src="../js/store.js"></script>
+<script src="../js/owner.js"></script>
+</body>
+</html>
