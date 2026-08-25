@@ -251,8 +251,16 @@ const Store = {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ type: 'order', order, sheetId: cfg.googleSheetId })
-    }).catch(err => console.warn('Apps Script notify failed (expected until configured):', err));
+      body: JSON.stringify({
+  action: "createOrder",
+  customerName: order.customer?.name || "",
+  phone: order.customer?.phone || "",
+  address: order.customer?.address || "",
+  items: order.items || [],
+  total: order.total || "",
+  payment: order.payment || order.paymentMethod || "COD",
+  status: order.status || "New"
+}).catch(err => console.warn('Apps Script notify failed (expected until configured):', err));
   },
 
   /* Owner auth */
